@@ -28,24 +28,22 @@ angular
         controller: 'MainCtrl',
         controllerAs: 'main'
       })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl',
-        controllerAs: 'about'
+      .when('/login', {
+        templateUrl: 'views/login.html',
+        controller: 'LoginCtrl',
+        controllerAs: 'login'
+      })
+      .when('/profile', {
+        templateUrl: 'views/profile.html',
+        controller: 'ProfileCtrl',
+        controllerAs: 'profile'
       })
       .otherwise({
         redirectTo: '/'
       });
   })
   .run(function($rootScope){
-    $rootScope.sidebar_class = '';
 
-    $rootScope.toggle_sidebar = function(){
-      if ($rootScope.sidebar_class === '') {
-        $rootScope.sidebar_class = 'sidebar-collapsed';
-      }
-      else {
-        $rootScope.sidebar_class = '';
-      }
-    }
+    $rootScope.togglesidebar = false;
+
   });

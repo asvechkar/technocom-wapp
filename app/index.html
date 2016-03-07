@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="./styles/neon-core.css">
   <link rel="stylesheet" href="./styles/neon-theme.css">
   <link rel="stylesheet" href="./styles/neon-forms.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
   <script src="./scripts/jquery-1.11.3.min.js"></script>
 
@@ -32,12 +33,12 @@
 
 
 </head>
-<body class="page-body" data-url="http://neon.dev">
+<body class="page-body gray" data-url="http://neon.dev">
 
-<div class="page-container" ng-class="sidebar_class"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
+<div class="page-container" ng-class="togglesidebar ? 'sidebar-collapsed' : ''">
+  <!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
 
   <div class="sidebar-menu">
-
     <div class="sidebar-menu-inner">
 
       <header class="logo-env">
@@ -51,7 +52,7 @@
 
         <!-- logo collapse icon -->
         <div class="sidebar-collapse">
-          <a href="" ng-click="toggle_sidebar()" class="sidebar-collapse-icon"><!-- add class "with-animation" if you want sidebar to have animation during expanding/collapsing transition -->
+          <a href="" ng-click="togglesidebar = !togglesidebar" class="sidebar-collapse-icon"><!-- add class "with-animation" if you want sidebar to have animation during expanding/collapsing transition -->
             <i class="entypo-menu"></i>
           </a>
         </div>
@@ -67,13 +68,13 @@
       </header>
 
 
-      <ul id="main-menu" class="main-menu">
+      <ul id="main-menu" class="main-menu" ng-controller="NavCtrl">
         <!-- add class "multiple-expanded" to allow multiple submenus to open -->
         <!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
-        <li>
-          <a href="#!/">
-            <i class="entypo-gauge"></i>
-            <span class="title">Главная</span>
+        <li ng-repeat="item in menu_items">
+          <a href="{{item.link}}">
+            <i class="{{item.icon}}"></i>
+            <span class="title">{{item.title}}</span>
           </a>
         </li>
       </ul>
@@ -83,6 +84,31 @@
   </div>
 
   <div class="main-content">
+
+    <div class="row">
+      <div class="col-md-6 col-sm-8 clearfix">
+        <ul class="user-info pull-left pull-none-xsm">
+          <li class="profile-info dropdown">
+            <a href="#!/profile" class="dropdown-toggle" data-toggle="dropdown">
+              <img src="./images/thumb@2x.png" alt="" class="img-circle" width="44" />
+              Алексей Свечкарь
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-6 col-sm-4 clearfix hidden-xs">
+        <ul class="list-inline links-list pull-right">
+          <li>
+            <a href="#!/logout">
+              Выход <i class="entypo-logout right"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <br />
+
     <div ng-view=""></div>
 
     <br />
@@ -110,7 +136,8 @@
 <script src="./scripts/resizeable.js"></script>
 <script src="./scripts/neon-api.js"></script>
 
-
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
 
 <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
 <script>
@@ -125,7 +152,6 @@
 
 <!-- build:js(.) scripts/vendor.js -->
 <!-- bower:js -->
-<script src="bower_components/jquery/dist/jquery.js"></script>
 <script src="bower_components/angular/angular.js"></script>
 <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 <script src="bower_components/angular-animate/angular-animate.js"></script>
@@ -140,8 +166,9 @@
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
 <script src="./scripts/app.js"></script>
 <script src="./scripts/controllers/main.js"></script>
-<script src="./scripts/controllers/about.js"></script>
 <script src="./scripts/controllers/nav.js"></script>
+<script src="./scripts/controllers/login.js"></script>
+<script src="./scripts/controllers/profile.js"></script>
 <!-- endbuild -->
 
 </body>
